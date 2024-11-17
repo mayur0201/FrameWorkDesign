@@ -25,7 +25,7 @@ public class submitOrderTest extends BaseTest {
         ProductCatalogue productpage = landingpage.launchApplication(input.get("email"), input.get("password"));
 
 
-        List<WebElement> productlist = productpage.getProductList();
+//        List<WebElement> productlist = productpage.getProductList();
         productpage.addProductToCart(input.get("product"));
         CartPage cartpage = productpage.clickonCart();
 
