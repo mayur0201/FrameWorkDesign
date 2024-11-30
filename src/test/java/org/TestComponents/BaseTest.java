@@ -6,16 +6,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.pageobjects.LandingPage;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
@@ -23,7 +20,7 @@ import java.util.Properties;
 public class BaseTest {
 
     public WebDriver driver;
-    public LandingPage landingpage;
+
 
     public WebDriver intializeDriver() throws IOException {
         Properties prop = new Properties();
@@ -61,15 +58,7 @@ public class BaseTest {
         return lst;
     }
 
-    @BeforeMethod
-    public LandingPage launchApplication() throws IOException {
-        driver = intializeDriver();
-        landingpage = new LandingPage(driver);
-        landingpage.goTo();
-        return landingpage;
 
-
-    }
 
     @AfterMethod
     public void quitBrowser() {

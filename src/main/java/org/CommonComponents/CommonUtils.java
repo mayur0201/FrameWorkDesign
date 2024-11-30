@@ -7,7 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.pageobjects.CartPage;
 
 import java.time.Duration;
 
@@ -43,10 +42,5 @@ public class CommonUtils {
         wait.until(ExpectedConditions.invisibilityOf(findBy));
     }
 
-    public CartPage clickonCart()
-    {
-        cartButton.click();
-        CartPage cartpage = new CartPage(driver);
-        return cartpage;
-    }
+
 }
