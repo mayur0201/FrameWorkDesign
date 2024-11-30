@@ -1,5 +1,6 @@
 package org.TestComponents;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import org.BuilderPattern.Register;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -8,15 +9,17 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class RegPageTest {
+import java.io.IOException;
+
+public class RegPageTest extends BaseTest{
 
     WebDriver driver;
 
     @BeforeTest
-    public void setUp()
-    {
-        driver = new ChromeDriver();
+    public void setUp() throws IOException {
+        driver = intializeDriver();
         driver.get("https://naveenautomationlabs.com/opencart/index.php?route=account/register");
+        driver.manage().window().maximize();
     }
 
     @Test
@@ -34,9 +37,5 @@ public class RegPageTest {
         rp.userRegister(register);
     }
 
-    @AfterTest
-    public void tearDown()
-    {
-        driver.quit();
-    }
+
 }
