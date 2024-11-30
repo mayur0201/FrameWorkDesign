@@ -25,11 +25,16 @@ public class submitOrderTest {
         ConfirmationPage cnfrmpage = checkoutPage.submitOrder();
         String confirmText = cnfrmpage.getConfirmationText();
         Assert.assertTrue(confirmText.equalsIgnoreCase("THANKYOU FOR THE ORDER."));
+        checkoutPage.logout();
     }
 
     @DataProvider
     public Object[][] getData() throws IOException {
         List<HashMap<String, String>> data = baseTest.getJsonData(System.getProperty("user.dir") + "/src/test/java/org/Testdata/testData.json");
-        return new Object[][]{{data.get(0)}};
+        Object[][] testData = new Object[data.size()][1];
+        for (int i = 0; i < data.size(); i++) {
+            testData[i][0] = data.get(i);
+        }
+        return testData;
     }
 }

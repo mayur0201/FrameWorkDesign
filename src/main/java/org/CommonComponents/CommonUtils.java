@@ -8,15 +8,20 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.pageobjects.CartPage;
+import org.pageobjects.CheckOutPage;
 
 import java.time.Duration;
 
 public class CommonUtils {
 
+
     WebDriver driver;
 
     @FindBy(css="[routerlink*='cart']")
     WebElement cartButton;
+
+    @FindBy(xpath = "//button[contains(text(), 'Sign Out')]")
+    WebElement logout;
 
     public CommonUtils(WebDriver driver) {
         this.driver =driver;
@@ -48,5 +53,12 @@ public class CommonUtils {
         cartButton.click();
         CartPage cartpage = new CartPage(driver);
         return cartpage;
+    }
+
+    public  CheckOutPage logout()
+    {
+        CheckOutPage checkOutPage = new CheckOutPage(driver);
+        logout.click();
+        return checkOutPage;
     }
 }
