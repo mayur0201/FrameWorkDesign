@@ -23,7 +23,7 @@ public class ConfirmationPage extends CommonUtils {
     WebElement text;
 
     public String getConfirmationText() throws InterruptedException {
-        Thread.sleep(5000);
+
         return text.getText();
     }
 }

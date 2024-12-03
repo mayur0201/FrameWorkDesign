@@ -8,6 +8,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.pageobjects.LandingPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +36,7 @@ public class BaseTest {
 
     public void setDriver(WebDriver driverInstance) {
         driver.set(driverInstance);
+
     }
 
     public WebDriver initializeDriver() throws IOException {
@@ -43,6 +46,9 @@ public class BaseTest {
 
         URL url = new URL("http://localhost:4444/wd/hub");
         WebDriver driverInstance = new RemoteWebDriver(url, options);
+        driverInstance.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driverInstance.manage().window().maximize();
+        WebDriverWait wait = new WebDriverWait(driverInstance, Duration.ofSeconds(7));
 
         setDriver(driverInstance); // Set the driver for this thread
 
