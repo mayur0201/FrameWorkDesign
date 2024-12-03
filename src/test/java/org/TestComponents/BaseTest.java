@@ -3,45 +3,49 @@ package org.TestComponents;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
 import org.pageobjects.LandingPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
-import java.time.Duration;
-import java.util.Arrays;
+
 import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
+
 
 public class BaseTest {
 
-    public WebDriver driver;
+
     public LandingPage landingpage;
 
-    public WebDriver intializeDriver() throws IOException {
-        Properties prop = new Properties();
-        FileInputStream fs = new FileInputStream(System.getProperty("user.dir") + "/src/main/java/org/resources/globalData.properties");
-        prop.load(fs);
+    private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
-        String browserName = prop.getProperty("browser");
+    public WebDriver getDriver() {
+        return driver.get();
+    }
 
+    public void setDriver(WebDriver driverInstance) {
+        driver.set(driverInstance);
+    }
 
-        if (browserName.equalsIgnoreCase("Chrome")) {
-            driver = new ChromeDriver();
-        } else if (browserName.equalsIgnoreCase("edge")) {
-            driver = new EdgeDriver();
-        }
+    public WebDriver initializeDriver() throws IOException {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--start-maximized");
+        options.setAcceptInsecureCerts(true);
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(7));
-        return driver;
+        URL url = new URL("http://localhost:4444/wd/hub");
+        WebDriver driverInstance = new RemoteWebDriver(url, options);
+
+        setDriver(driverInstance); // Set the driver for this thread
+
+        return driverInstance;
     }
 
     public static String readFileAsString(String filePath) throws IOException {
@@ -63,7 +67,7 @@ public class BaseTest {
 
     @BeforeMethod
     public LandingPage launchApplication() throws IOException {
-        driver = intializeDriver();
+        WebDriver driver = initializeDriver();  // Ensure a new driver is initialized before each test
         landingpage = new LandingPage(driver);
         landingpage.goTo();
         return landingpage;
@@ -73,6 +77,6 @@ public class BaseTest {
 
     @AfterMethod
     public void quitBrowser() {
-        driver.close();
+        driver.get().quit();
     }
 }
