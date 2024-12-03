@@ -17,7 +17,7 @@ import java.util.List;
 public class submitOrderTest extends BaseTest {
 
     @Test(dataProvider="getData")
-    public void submitOrder(HashMap<String,String> input) throws IOException {
+    public void submitOrder(HashMap<String,String> input) throws IOException, InterruptedException {
 //        String productName = "ZARA COAT 3";
 //        String countryName = "India";
 
@@ -36,8 +36,11 @@ public class submitOrderTest extends BaseTest {
         checkoutPage.setSelectCountry(input.get("country"));
         ConfirmationPage cnfrmpage = checkoutPage.submitOrder();
 
+
         String confirmText = cnfrmpage.getConfirmationText();
         Assert.assertTrue(confirmText.equalsIgnoreCase("THANKYOU FOR THE ORDER."));
+
+        takeScreenshot("Order Successfull");
 
 
     }

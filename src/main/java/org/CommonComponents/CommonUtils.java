@@ -47,6 +47,7 @@ public class CommonUtils {
     {
         cartButton.click();
         CartPage cartpage = new CartPage(driver);
+        System.out.println("Title of Page is " +driver.getTitle());
         return cartpage;
     }
 }

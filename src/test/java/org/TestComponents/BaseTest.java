@@ -2,26 +2,27 @@ package org.TestComponents;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
-
 import org.pageobjects.LandingPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
-
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-
 public class BaseTest {
-
 
     public LandingPage landingpage;
 
@@ -49,19 +50,18 @@ public class BaseTest {
     }
 
     public static String readFileAsString(String filePath) throws IOException {
-
         // Returning the content of the JSON file as a String
         return new String(Files.readAllBytes(new File(filePath).toPath()));
     }
 
     public List<HashMap<String, String>> getJsonData(String filePath) throws IOException {
-
         // Read the content of the JSON file into a String
-        String jsnContent= readFileAsString(filePath);
+        String jsnContent = readFileAsString(filePath);
 
         // Parse the JSON content into a List of HashMaps
-        ObjectMapper mapper  = new ObjectMapper();
-        List<HashMap<String, String>> lst=mapper.readValue(jsnContent, new TypeReference<List<HashMap<String,String>>>(){});
+        ObjectMapper mapper = new ObjectMapper();
+        List<HashMap<String, String>> lst = mapper.readValue(jsnContent, new TypeReference<List<HashMap<String, String>>>() {
+        });
         return lst;
     }
 
@@ -71,12 +71,29 @@ public class BaseTest {
         landingpage = new LandingPage(driver);
         landingpage.goTo();
         return landingpage;
-
-
     }
 
     @AfterMethod
     public void quitBrowser() {
         driver.get().quit();
+    }
+
+    // Add the screenshot method
+    public void takeScreenshot(String testName) {
+        WebDriver driver = getDriver();
+        if (driver == null) {
+            throw new IllegalStateException("Driver is null. Cannot take screenshot.");
+        }
+
+        // Generate a timestamp for the screenshot
+        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        // Take a screenshot and store it as a file format
+        File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        try {
+            // Store screenshot in desired location
+            FileUtils.copyFile(srcFile, new File("screenshots/" + testName + "_" + timestamp + ".png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

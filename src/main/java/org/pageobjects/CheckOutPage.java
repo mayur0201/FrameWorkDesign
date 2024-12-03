@@ -22,7 +22,7 @@ public class CheckOutPage extends CommonUtils {
     @FindBy(css="[placeholder]")
     WebElement country;
 
-    @FindBy(css = ".action__submit")
+    @FindBy(xpath = "//*[contains(@class, 'action__submit')]")
     WebElement actionSubmit;
 
     @FindBy(xpath = "(//button[contains(@class,'ta-item')])[2]")

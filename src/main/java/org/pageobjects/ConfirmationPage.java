@@ -19,11 +19,11 @@ public class ConfirmationPage extends CommonUtils {
         PageFactory.initElements(driver,this);
     }
 
-    @FindBy(css = ".hero-primary")
+    @FindBy(xpath = "//h1[@class='hero-primary']")
     WebElement text;
 
-    public String getConfirmationText()
-    {
+    public String getConfirmationText() throws InterruptedException {
+        Thread.sleep(5000);
         return text.getText();
     }
 }
