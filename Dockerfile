@@ -1,19 +1,24 @@
-FROM openjdk:11-jre-slim
+FROM openjdk:11-jdk-slim
 
-# Install Docker CLI
-RUN apt-get update && apt-get install -y docker.io && apt-get clean
+# Install required dependencies
+RUN apt-get update && apt-get install -y \
+    docker.io \
+    maven \
+    curl \
+    bash && \
+    apt-get clean
 
-# Set the working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy your project files to the container
+# Copy the project files into the container
 COPY . .
 
-# Install Maven (if not already included in your project)
-RUN apt-get update && apt-get install -y maven
+# Ensure the start and stop scripts are executable
+RUN chmod +x /app/start_docker.sh /app/stop_docker.sh
 
-# Ensure scripts are executable
-RUN chmod +x start_dockerGrid.sh stop_dockerGrid.sh
+# Set the Maven dependency cache to speed up builds
+RUN mvn dependency:go-offline -B
 
 # Run the tests
 CMD ["sh", "-c", "mvn test"]

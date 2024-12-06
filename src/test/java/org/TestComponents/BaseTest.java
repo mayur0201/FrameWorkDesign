@@ -43,8 +43,8 @@ public class BaseTest {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
         options.setAcceptInsecureCerts(true);
-
         URL url = new URL("http://localhost:4444/wd/hub");
+//        URL url = new URL("http://13.53.92.0:4444/");
         WebDriver driverInstance = new RemoteWebDriver(url, options);
         driverInstance.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driverInstance.manage().window().maximize();

@@ -23,16 +23,16 @@ public class setUpDockerGridTest {
 //    }
 
 
-    @BeforeTest
-    public void startGrid() throws IOException, InterruptedException {
-        Runtime.getRuntime().exec("sh ./start_dockerGrid.sh");
-        Thread.sleep(15000); // Adjust sleep time as needed
-    }
-        @AfterTest
-        public void stopGrid() throws InterruptedException, IOException {
-            Runtime.getRuntime().exec("sh ./stop_dockerGrid.sh");
-            Thread.sleep(5000);
-        }
+//    @BeforeTest
+//    public void startGrid() throws IOException, InterruptedException {
+//        Runtime.getRuntime().exec("sh ./start_docker.sh");
+//        Thread.sleep(15000); // Adjust sleep time as needed
+//    }
+//        @AfterTest
+//        public void stopGrid() throws InterruptedException, IOException {
+//            Runtime.getRuntime().exec("sh ./stop_docker.sh");
+//            Thread.sleep(5000);
+//        }
 
     }
 
