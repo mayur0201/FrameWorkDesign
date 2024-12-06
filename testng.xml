@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite" >
-<!--    <test name="Submit Order Test">-->
-<!--        <classes>-->
-<!--            <class name="org.pageobjects.submitOrderTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-        <test  name="Error Validations">
-            <classes>
-                <class name="org.pageobjects.errorValidationTest"/>
-            </classes>
-        </test>
+<suite name="Open Cart Test Regression PW Suite" verbose="4" thread-count="2" parallel="tests">
+    <test name="Submit Order Test">
+        <classes>
+            <class name="org.pageobjects.submitOrderTest"/>
+        </classes>
+    </test>
+<!--        <test  name="Error Validations">-->
+<!--            <classes>-->
+<!--                <class name="org.pageobjects.errorValidationTest"/>-->
+<!--            </classes>-->
+<!--        </test>-->
 </suite>

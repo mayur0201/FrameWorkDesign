@@ -24,7 +24,7 @@ import java.util.Properties;
 public class BaseTest {
 
     private static volatile BaseTest instance;
-    private static volatile WebDriver driver;
+
     private static ThreadLocal<WebDriver> t1 = new ThreadLocal<>();
     public LandingPage landingpage;
 
@@ -58,9 +58,9 @@ public class BaseTest {
             t1.set(new EdgeDriver());
         }
 
-        driver = t1.get();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(7));
+
+        t1.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(t1.get(), Duration.ofSeconds(7));
     }
 
     public WebDriver getDriver() {
@@ -81,7 +81,8 @@ public class BaseTest {
     public List<HashMap<String, String>> getJsonData(String filePath) throws IOException {
         String jsnContent = readFileAsString(filePath);
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(jsnContent, new TypeReference<List<HashMap<String, String>>>() {});
+        return mapper.readValue(jsnContent, new TypeReference<List<HashMap<String, String>>>() {
+        });
     }
 
     @BeforeClass
