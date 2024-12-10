@@ -3,7 +3,7 @@
 <suite parallel="tests" name="All Test Suite">
     <test name="Submit Order Test">
         <classes>
-<!--            <class name="org.pageobjects.setUpDockerGridTest"/>-->
+            <class name="org.pageobjects.setUpDockerGridTest"/>
             <class name="org.pageobjects.submitOrderTest"/>
         </classes>
     </test>
