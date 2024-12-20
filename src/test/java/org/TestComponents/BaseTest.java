@@ -44,7 +44,7 @@ public class BaseTest {
         options.addArguments("--start-maximized");
         options.setAcceptInsecureCerts(true);
         URL url = new URL("http://localhost:4444/wd/hub");
-//        URL url = new URL("http://13.53.92.0:4444/");
+//          URL url = new URL("http://16.171.226.172:4444/");
         WebDriver driverInstance = new RemoteWebDriver(url, options);
         driverInstance.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driverInstance.manage().window().maximize();
