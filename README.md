@@ -105,7 +105,3 @@ This project is configured for use with Azure Pipelines. The pipeline definition
 Contributions are welcome! Please fork the repository and submit a pull request.
 
 ---
-
-## License
-
-This project is licensed under the MIT License.
