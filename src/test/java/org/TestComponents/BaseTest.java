@@ -2,7 +2,7 @@ package org.TestComponents;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -12,7 +12,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.pageobjects.LandingPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,19 +25,20 @@ import java.util.List;
 
 public class BaseTest {
 
+    private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
     public LandingPage landingpage;
 
-    private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
-
+    // Thread-safe getter for WebDriver
     public WebDriver getDriver() {
         return driver.get();
     }
 
+    // Thread-safe setter for WebDriver
     public void setDriver(WebDriver driverInstance) {
         driver.set(driverInstance);
-
     }
 
+    // Initialize WebDriver with common configurations
     public WebDriver initializeDriver() throws IOException {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
@@ -55,48 +55,34 @@ public class BaseTest {
         return driverInstance;
     }
 
-    public static String readFileAsString(String filePath) throws IOException {
-        // Returning the content of the JSON file as a String
-        return new String(Files.readAllBytes(new File(filePath).toPath()));
-    }
-
+    // Parse JSON data from a file into a List of HashMaps
     public List<HashMap<String, String>> getJsonData(String filePath) throws IOException {
-        // Read the content of the JSON file into a String
-        String jsnContent = readFileAsString(filePath);
-
-        // Parse the JSON content into a List of HashMaps
-        ObjectMapper mapper = new ObjectMapper();
-        List<HashMap<String, String>> lst = mapper.readValue(jsnContent, new TypeReference<List<HashMap<String, String>>>() {
-        });
-        return lst;
+        String jsonContent = Files.readString(new File(filePath).toPath());
+        return new ObjectMapper().readValue(jsonContent, new TypeReference<>() {});
     }
 
+    // Launch the application and return the LandingPage object
     @BeforeMethod
     public LandingPage launchApplication() throws IOException {
-        WebDriver driver = initializeDriver();  // Ensure a new driver is initialized before each test
+        WebDriver driver = initializeDriver();
         landingpage = new LandingPage(driver);
         landingpage.goTo();
         return landingpage;
     }
 
+    // Quit the browser after each test
     @AfterMethod
     public void quitBrowser() {
-        driver.get().quit();
+        if (getDriver() != null) {
+            getDriver().quit();
+        }
     }
 
-    // Add the screenshot method
+    // Take a screenshot and save it with a timestamp
     public void takeScreenshot(String testName) {
-        WebDriver driver = getDriver();
-        if (driver == null) {
-            throw new IllegalStateException("Driver is null. Cannot take screenshot.");
-        }
-
-        // Generate a timestamp for the screenshot
-        String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        // Take a screenshot and store it as a file format
-        File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         try {
-            // Store screenshot in desired location
+            File srcFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
+            String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
             FileUtils.copyFile(srcFile, new File("screenshots/" + testName + "_" + timestamp + ".png"));
         } catch (IOException e) {
             e.printStackTrace();
