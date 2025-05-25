@@ -46,27 +46,27 @@ public class setUpDockerGridTest {
 
     // Uncomment the following methods if you are using a Unix-based system
 
-    // /**
-    //  * Starts the Selenium Grid by executing the start_docker.sh script.
-    //  *
-    //  * @throws IOException if there is an error in executing the script
-    //  * @throws InterruptedException if the thread is interrupted while sleeping
-    //  */
-    // @BeforeTest
-    // public void startGrid() throws IOException, InterruptedException {
-    //     Runtime.getRuntime().exec("sh ./start_docker.sh");
-    //     Thread.sleep(15000); // Adjust sleep time as needed
-    // }
-
-    // /**
-    //  * Stops the Selenium Grid by executing the stop_docker.sh script.
-    //  *
-    //  * @throws IOException if there is an error in executing the script
-    //  * @throws InterruptedException if the thread is interrupted while sleeping
-    //  */
-    // @AfterTest
-    // public void stopGrid() throws InterruptedException, IOException {
-    //     Runtime.getRuntime().exec("sh ./stop_docker.sh");
-    //     Thread.sleep(5000);
-    // }
+//     /**
+//      * Starts the Selenium Grid by executing the start_docker.sh script.
+//      *
+//      * @throws IOException if there is an error in executing the script
+//      * @throws InterruptedException if the thread is interrupted while sleeping
+//      */
+//     @BeforeTest
+//     public void startGrid() throws IOException, InterruptedException {
+//         Runtime.getRuntime().exec("sh ./start_docker.sh");
+//         Thread.sleep(15000); // Adjust sleep time as needed
+//     }
+//
+//     /**
+//      * Stops the Selenium Grid by executing the stop_docker.sh script.
+//      *
+//      * @throws IOException if there is an error in executing the script
+//      * @throws InterruptedException if the thread is interrupted while sleeping
+//      */
+//     @AfterTest
+//     public void stopGrid() throws InterruptedException, IOException {
+//         Runtime.getRuntime().exec("sh ./stop_docker.sh");
+//         Thread.sleep(5000);
+//     }
 }
